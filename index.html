@@ -208,8 +208,8 @@ function validar() {
   const cedula = document.getElementById("cedula").value;
   const error = document.getElementById("error");
 
-  if (!/^[0-12]{9,10}$/.test(cedula)) {
-    alert("Cédula inválida");
+  if (!/^\d{9}$|^\d{12}$/.test(cedula)) {
+    alert("La cédula debe contener 9 o 12 dígitos numéricos.");
     return false;
   }
 

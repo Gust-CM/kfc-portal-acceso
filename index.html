@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Acceso | Portal de Capacitación & Calidad</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+  --kfc-red: #c8102e;
+  --gray-text: #555;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f2f2f2;
+}
+
+.container {
+  max-width: 460px;
+  margin: 70px auto;
+  background: #fff;
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo img {
+  max-width: 140px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: var(--gray-text);
+  margin-bottom: 25px;
+}
+
+.info {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 14px;
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 11px;
+  margin-top: 6px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.checkbox {
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.checkbox a {
+  color: var(--kfc-red);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+button {
+  width: 100%;
+  background: var(--kfc-red);
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 15px;
+  border-radius: 6px;
+  margin-top: 22px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #a50d25;
+}
+
+.error {
+  color: var(--kfc-red);
+  font-size: 13px;
+  margin-top: 10px;
+  display: none;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin-top: 25px;
+}
+
+/* Modal términos */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  background: #fff;
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 25px;
+  border-radius: 8px;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+  <img src="logo-png.png" alt="KFC Costa Rica">
+</div>
+
+<h1>Portal de Capacitación & Calidad</h1>
+<div class="subtitle">KFC Costa Rica · Prueba Piloto</div>
+
+<div class="info">
+Esta plataforma centraliza material de capacitación, calidad y apoyo operativo.
+<br><br>
+El acceso es <strong>exclusivo para personal autorizado</strong> y forma parte de una prueba piloto.
+</div>
+
+<form
+  name="accesos-portal"
+  method="POST"
+  data-netlify="true"
+  action="https://sites.google.com/view/portal-de-capacitacion-kfc/inicio"
+  onsubmit="return validarAcceso()">
+
+  <!-- Necesario para Netlify -->
+  <input type="hidden" name="form-name" value="accesos-portal">
+  <input type="hidden" name="fase" value="Piloto 2025">
+
+  <label>Nombre completo</label>
+  <input type="text" name="nombre" required>
+
+  <label>Cédula</label>
+  <input type="text" name="cedula" id="cedula" required>
+
+  <label>Clave de acceso</label>
+  <input type="password" id="password" required>
+
+  <div class="checkbox">
+    <input type="checkbox" id="terms" required>
+    Acepto los <a onclick="openModal()">términos y condiciones de uso interno</a>
+  </div>
+
+  <button type="submit">Acceder al portal</button>
+
+  <div class="error" id="error">
+    Clave incorrecta o datos inválidos.
+  </div>
+
+</form>
+
+<div class="footer">
+© 2025 KFC Costa Rica – Uso interno
+</div>
+
+</div>
+
+<!-- MODAL DE TÉRMINOS -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">✕</span>
+    <h3>Términos y Condiciones de Uso Interno</h3>
+    <p>
+      1. Este portal es de uso exclusivo interno para colaboradores autorizados.<br><br>
+      2. La información es confidencial y no debe compartirse fuera de KFC Costa Rica.<br><br>
+      3. El acceso es únicamente para fines de capacitación y apoyo operativo.<br><br>
+      4. El uso indebido puede generar medidas administrativas internas.<br><br>
+      5. El acceso puede ser restringido o deshabilitado sin previo aviso.
+    </p>
+  </div>
+</div>
+
+<script>
+function validarAcceso() {
+
+  const claveCorrecta = "KFCIntelectiva2025";
+
+  const cedula = document.getElementById("cedula").value;
+  const password = document.getElementById("password").value;
+  const error = document.getElementById("error");
+
+  // Validar cédula (CR genérico)
+  if (!/^[0-9]{9,10}$/.test(cedula)) {
+    alert("Cédula inválida");
+    return false;
+  }
+
+  // Validar password
+  if (password !== claveCorrecta) {
+    error.style.display = "block";
+    return false;
+  }
+
+  // Todo OK → Netlify envía y redirige
+  error.style.display = "none";
+  return true;
+}
+
+function openModal() {
+  document.getElementById("modal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("modal").style.display = "none";
+}
+</script>
+
+</body>
+</html>

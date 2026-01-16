@@ -3,20 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <title>Acceso autorizado</title>
-<meta http-equiv="refresh" content="2;url=https://sites.google.com/view/portal-de-capacitacion-kfc/inicio">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body {
-  font-family:Arial;
+body{
+  font-family:"Segoe UI", Arial, sans-serif;
   background:#f3f3f3;
-  text-align:center;
-  padding-top:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  margin:0;
 }
+.box{
+  background:#fff;
+  padding:40px;
+  border-radius:12px;
+  box-shadow:0 20px 40px rgba(0,0,0,.2);
+  text-align:center;
+  animation:fadeIn .5s ease-out;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px)}
+  to{opacity:1; transform:translateY(0)}
+}
+.spinner{
+  width:32px;
+  height:32px;
+  border:4px solid #ddd;
+  border-top:4px solid #c8102e;
+  border-radius:50%;
+  margin:20px auto;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
+
 <body>
 
-<h2>Acceso autorizado</h2>
-<p>Redirigiendo al portal...</p>
+<div class="box">
+  <h2>Acceso autorizado</h2>
+  <p>Redirigiendo al portal…</p>
+  <div class="spinner"></div>
+</div>
+
+<script>
+/*
+  replace() evita que el navegador
+  guarde esta página en el historial
+*/
+setTimeout(() => {
+  window.location.replace(
+    "https://sites.google.com/view/portal-de-capacitacion-kfc/inicio"
+  );
+}, 1200);
+</script>
 
 </body>
 </html>

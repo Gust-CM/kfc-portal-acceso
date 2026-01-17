@@ -25,7 +25,6 @@ body{
   font-family:"Segoe UI", Arial, sans-serif;
 }
 
-/* CARD */
 .card{
   width:100%;
   max-width:460px;
@@ -36,31 +35,17 @@ body{
   animation:fadeInUp .6s ease-out;
 }
 
-/* ANIMATION */
 @keyframes fadeInUp{
   from{opacity:0; transform:translateY(25px)}
   to{opacity:1; transform:translateY(0)}
 }
 
-.logo{
-  text-align:center;
-  margin-bottom:12px;
-}
+.logo{text-align:center;margin-bottom:12px}
 .logo img{max-width:120px}
 
-h1{
-  text-align:center;
-  font-size:22px;
-  margin:8px 0 4px;
-}
-.subtitle{
-  text-align:center;
-  font-size:13px;
-  color:var(--gray);
-  margin-bottom:22px;
-}
+h1{text-align:center;font-size:22px;margin:8px 0 4px}
+.subtitle{text-align:center;font-size:13px;color:var(--gray);margin-bottom:22px}
 
-/* INFO */
 .info-box{
   background:var(--light);
   padding:16px;
@@ -70,7 +55,6 @@ h1{
   margin-bottom:22px;
 }
 
-/* FORM */
 label{
   font-size:13px;
   font-weight:600;
@@ -87,6 +71,7 @@ input{
   font-size:14px;
   background:#fafafa;
 }
+
 input:focus{
   outline:none;
   border-color:var(--kfc-red);
@@ -100,6 +85,7 @@ input:focus{
   margin-top:18px;
   line-height:1.4;
 }
+
 .checkbox a{
   color:var(--kfc-red);
   font-weight:600;
@@ -107,7 +93,6 @@ input:focus{
   text-decoration:underline;
 }
 
-/* BUTTON */
 button{
   width:100%;
   margin-top:26px;
@@ -121,6 +106,7 @@ button{
   cursor:pointer;
   box-shadow:0 8px 18px rgba(200,16,46,.35);
 }
+
 button:hover{background:var(--kfc-dark)}
 
 .error{
@@ -131,7 +117,6 @@ button:hover{background:var(--kfc-dark)}
   text-align:center;
 }
 
-/* LOADING */
 .loading{
   display:none;
   text-align:center;
@@ -139,6 +124,7 @@ button:hover{background:var(--kfc-dark)}
   font-size:14px;
   color:var(--gray);
 }
+
 .spinner{
   width:28px;
   height:28px;
@@ -148,9 +134,9 @@ button:hover{background:var(--kfc-dark)}
   margin:10px auto;
   animation:spin 1s linear infinite;
 }
+
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* WELCOME */
 .welcome{
   display:none;
   text-align:center;
@@ -159,7 +145,6 @@ button:hover{background:var(--kfc-dark)}
   margin-top:18px;
 }
 
-/* FOOTER */
 footer{
   margin-top:26px;
   text-align:center;
@@ -167,13 +152,13 @@ footer{
   color:#777;
 }
 
-/* MODAL */
 .modal{
   display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.6);
 }
+
 .modal-content{
   background:#fff;
   max-width:620px;
@@ -181,13 +166,13 @@ footer{
   padding:28px;
   border-radius:10px;
 }
+
 .close{
   float:right;
   font-weight:bold;
   cursor:pointer;
 }
 
-/* MOBILE */
 @media(max-width:480px){
   .card{padding:26px}
   h1{font-size:20px}
@@ -205,7 +190,7 @@ footer{
 </div>
 
 <h1>Portal de Capacitación & Calidad</h1>
-<div class="subtitle">KFC Costa Rica · Prueba Piloto</div>
+<div class="subtitle">KFC Costa Rica · Producción controlada</div>
 
 <div class="info-box">
 Centraliza material de <strong>capacitación</strong>, <strong>calidad</strong> y
@@ -223,6 +208,9 @@ Acceso <strong>exclusivo para personal autorizado</strong>.
 
 <label>Nombre completo</label>
 <input type="text" id="nombre" name="nombre" required>
+
+<label>Correo electrónico</label>
+<input type="email" id="correo" name="correo" placeholder="nombre@kfc.co.cr" required>
 
 <label>Cédula</label>
 <input type="text" id="cedula" name="cedula" required>
@@ -252,7 +240,6 @@ Acceso <strong>exclusivo para personal autorizado</strong>.
 
 </div>
 
-<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">✕</span>
@@ -268,12 +255,20 @@ Acceso <strong>exclusivo para personal autorizado</strong>.
 <script>
 function validarAcceso(){
   const CLAVE = "KFCIntelectiva2025";
+
   const nombre = document.getElementById("nombre").value.trim();
+  const correo = document.getElementById("correo").value.trim();
   const cedula = document.getElementById("cedula").value.trim();
   const clave = document.getElementById("clave").value;
+
   const error = document.getElementById("error");
   const loading = document.getElementById("loading");
   const welcome = document.getElementById("welcome");
+
+  if(!correo.includes("@")){
+    alert("Correo electrónico inválido.");
+    return false;
+  }
 
   if(!/^\d{9}$|^\d{12}$/.test(cedula)){
     alert("La cédula debe tener 9 o 12 dígitos.");
@@ -287,7 +282,7 @@ function validarAcceso(){
 
   error.style.display="none";
   loading.style.display="block";
-  welcome.innerText = `Bienvenid@ ${nombre}, preparando acceso…`;
+  welcome.innerText = `Bienvenid@ ${nombre}, validando acceso…`;
   welcome.style.display="block";
 
   return true;
